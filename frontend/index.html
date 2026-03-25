@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodCanvas - Share Your Mood Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .mood-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .mood-streak {
+            font-size: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            animation: pulse 2s infinite;
+        }
+        .share-button {
+            background: #FF4D4D;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .share-button:hover {
+            transform: scale(1.05);
+        }
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s;
+        }
+        .mood-reactions {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0;
+        }
+        .reaction-count {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="mood-container animate__animated animate__fadeIn">
+        <h1>🎨 MoodCanvas</h1>
+        <div class="mood-streak">🔥 7 Day Streak!</div>
+        
+        <div class="daily-challenge animate__animated animate__bounceIn">
+            <h2>🌟 Daily Challenge</h2>
+            <div class="challenge-card">
+                <h3>"Gratitude Wave"</h3>
+                <p>Share 3 things you're grateful for and tag 3 friends!</p>
+                <div class="participants">1,234 people joined today</div>
+            </div>
+        </div>
+
+        <div class="mood-share">
+            <h2>Today's Mood</h2>
+            <div class="mood-canvas" id="moodCanvas">
+                <!-- Dynamic mood visualization -->
+            </div>
+            <div class="mood-reactions">
+                <span>❤️ <span class="reaction-count">423</span></span>
+                <span>🤗 <span class="reaction-count">256</span></span>
+                <span>💪 <span class="reaction-count">189</span></span>
+            </div>
+            <button class="share-button animate__animated animate__pulse">Share My Mood Journey</button>
+        </div>
+
+        <div class="trending-moods">
+            <h2>🔥 Trending Mood Stories</h2>
+            <div class="challenge-card">
+                <p>"How I turned my Monday blues into motivation" - @sarah_j</p>
+                <div class="mood-reactions">
+                    <span>👏 2.1k</span>
+                    <span>💖 1.8k</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gamification & Viral Features
+        let streakCount = 7;
+        let points = 1250;
+
+        function updateStreak() {
+            if (Math.random() > 0.5) {
+                streakCount++;
+                showNotification(`🎉 ${streakCount} Day Streak! Keep going!`);
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification animate__animated animate__fadeInDown';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Social Sharing
+        document.querySelector('.share-button').addEventListener('click', () => {
+            showNotification('🌟 Sharing your mood journey...');
+            points += 100;
+            // Implement actual sharing functionality
+        });
+
+        // Reactions System
+        document.querySelectorAll('.mood-reactions span').forEach(reaction => {
+            reaction.addEventListener('click', () => {
+                const count = reaction.querySelector('.reaction-count');
+                count.textContent = parseInt(count.textContent) + 1;
+                showNotification('💖 Thanks for spreading positivity!');
+            });
+        });
+
+        // Daily Challenge System
+        setInterval(() => {
+            const participants = document.querySelector('.participants');
+            const current = parseInt(participants.textContent);
+            participants.textContent = `${current + Math.floor(Math.random() * 5)} people joined today`;
+        }, 5000);
+    </script>
+</body>
+</html>
